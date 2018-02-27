@@ -3,6 +3,7 @@ import Dropzone from 'react-dropzone';
 import axios from 'axios';
 
 import '../static/ImageUpload.css';
+import ImageDisplay from './ImageDisplay';
 
 class ImageUpload extends Component {
 
@@ -13,20 +14,19 @@ class ImageUpload extends Component {
             selectedFile: null
         };
 
-        this.fileSelectedHandler.bind(this);
-
+        // this.fileSelectedHandler.bind(this);
     }
 
-    fileSelectedHandler([file]) {
-
-        console.log(file);
-
-        this.setState({
-            selectedFile: file
-        });
-
-        console.log(this.state);
-    };
+    // fileSelectedHandler => files {
+    //
+    //     console.log(file);
+    //
+    //     this.setState({
+    //         selectedFile: file
+    //     });
+    //
+    //     console.log(this.state);
+    // };
 
     fileUploadHandler = () => {
         const fd = new FormData();
@@ -46,29 +46,44 @@ class ImageUpload extends Component {
         const selectedFile = this.state.selectedFile;
 
         return (
-            <div className="image-upload">
+            <div>
+                <div className="image-upload">
 
-                <Dropzone
-                    multiple={false}
-                    accept="image/*"
-                    onDrop={this.fileSelectedHandler}>
-                    <p>Drop an image or click to select a file</p>
-                </Dropzone>
+                    <Dropzone
+                        multiple={false}
+                        accept="image/*"
+                        onDrop={(files) => this.setState({selectedFile: files[0]})}>
+                        <p>Drop an image or click to select a file</p>
+                    </Dropzone>
 
-                {selectedFile && <img src={selectedFile.preview} alt="image preview"/>}
+                    {/*<input style={{display: 'none'}}*/}
+                    {/*type="file"*/}
+                    {/*onChange={this.fileSelectedHandler}*/}
+                    {/*ref={fileInput => this.fileInput = fileInput}*/}
+                    {/*/>*/}
 
-                {/*<input style={{display: 'none'}}*/}
-                {/*type="file"*/}
-                {/*onChange={this.fileSelectedHandler}*/}
-                {/*ref={fileInput => this.fileInput = fileInput}*/}
-                {/*/>*/}
+                    {/*<button onClick={() => this.fileInput.click()}>Pick File</button>*/}
 
-                {/*<button onClick={() => this.fileInput.click()}>Pick File</button>*/}
+                    {/*<button onClick={this.fileUploadHandler}>Upload</button>*/}
 
-                {/*<button onClick={this.fileUploadHandler}>Upload</button>*/}
+
+                </div>
+
+                <div className="image-preview-container">
+
+                    {selectedFile &&
+                    <ImageDisplay image_url={this.state.selectedFile.preview}/>
+                    }
+
+                    {selectedFile &&
+                    <ImageDisplay image_url={this.state.selectedFile.preview}/>
+                    }
+
+                </div>
 
 
             </div>
+
 
         );
     }
