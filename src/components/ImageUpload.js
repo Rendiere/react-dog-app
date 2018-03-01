@@ -11,22 +11,10 @@ class ImageUpload extends Component {
         super(props);
 
         this.state = {
-            selectedFile: null
+            selectedFile: null,
+            predictions: null
         };
-
-        // this.fileSelectedHandler.bind(this);
     }
-
-    // fileSelectedHandler => files {
-    //
-    //     console.log(file);
-    //
-    //     this.setState({
-    //         selectedFile: file
-    //     });
-    //
-    //     console.log(this.state);
-    // };
 
     fileUploadHandler = () => {
         const fd = new FormData();
@@ -38,35 +26,31 @@ class ImageUpload extends Component {
             }
         })
             .then(res => {
-                console.log(res);
+                this.setState({
+                    selectedFile: this.state.selectedFile,
+                    predictions: res.data
+                });
             })
     };
 
     render() {
         const selectedFile = this.state.selectedFile;
+        const predictions = this.state.predictions;
 
         return (
             <div>
                 <div className="image-upload">
-
                     <Dropzone
                         multiple={false}
                         accept="image/*"
                         onDrop={(files) => this.setState({selectedFile: files[0]})}>
                         <p>Drop an image or click to select a file</p>
                     </Dropzone>
-
-                    {/*<input style={{display: 'none'}}*/}
-                    {/*type="file"*/}
-                    {/*onChange={this.fileSelectedHandler}*/}
-                    {/*ref={fileInput => this.fileInput = fileInput}*/}
-                    {/*/>*/}
-
-                    {/*<button onClick={() => this.fileInput.click()}>Pick File</button>*/}
-
-                    {/*<button onClick={this.fileUploadHandler}>Upload</button>*/}
-
-
+                    <button className="upload-button"
+                            onClick={this.fileUploadHandler}
+                        disabled={!this.state.selectedFile}>
+                        Predict dog breed
+                    </button>
                 </div>
 
                 <div className="image-preview-container">
@@ -75,7 +59,7 @@ class ImageUpload extends Component {
                     <ImageDisplay image_url={this.state.selectedFile.preview}/>
                     }
 
-                    {selectedFile &&
+                    {predictions &&
                     <ImageDisplay image_url={this.state.selectedFile.preview}/>
                     }
 
