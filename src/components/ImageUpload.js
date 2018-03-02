@@ -12,7 +12,7 @@ class ImageUpload extends Component {
 
         this.state = {
             selectedFile: null,
-            predictions: null
+            prediction: null
         };
     }
 
@@ -28,14 +28,14 @@ class ImageUpload extends Component {
             .then(res => {
                 this.setState({
                     selectedFile: this.state.selectedFile,
-                    predictions: res.data
+                    prediction: res.data.prediction
                 });
-            })
+            });
     };
 
     render() {
         const selectedFile = this.state.selectedFile;
-        const predictions = this.state.predictions;
+        const prediction = this.state.prediction;
 
         return (
             <div>
@@ -48,7 +48,7 @@ class ImageUpload extends Component {
                     </Dropzone>
                     <button className="upload-button"
                             onClick={this.fileUploadHandler}
-                        disabled={!this.state.selectedFile}>
+                            disabled={!this.state.selectedFile}>
                         Predict dog breed
                     </button>
                 </div>
@@ -59,10 +59,9 @@ class ImageUpload extends Component {
                     <ImageDisplay image_url={this.state.selectedFile.preview}/>
                     }
 
-                    {predictions &&
-                    <ImageDisplay image_url={this.state.selectedFile.preview}/>
+                    {prediction &&
+                    <ImageDisplay image_url={`./sample_images/${this.state.prediction}.jpg`}/>
                     }
-
                 </div>
 
 
@@ -74,3 +73,4 @@ class ImageUpload extends Component {
 }
 
 export default ImageUpload;
+;

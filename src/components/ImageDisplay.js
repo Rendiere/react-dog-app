@@ -9,7 +9,9 @@ export default class ImageDisplay extends Component {
         return (
             <div className="image-display">
                 <div className="image-container">
-                    <img src={this.props.image_url}/>
+                    {
+                        this.props.image_url && <img src={this.props.image_url} />
+                    }
                 </div>
             </div>
         )
