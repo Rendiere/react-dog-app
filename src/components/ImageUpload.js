@@ -60,7 +60,7 @@ class ImageUpload extends Component {
                     }
 
                     {prediction &&
-                    <ImageDisplay image_url={`./sample_images/${this.state.prediction}.jpg`}/>
+                    <ImageDisplay prediction={true} image_url={`./sample_images/${this.state.prediction}.jpg`}/>
                     }
                 </div>
 
